@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>index</title>
+<style>
+	*{
+		font-family : 휴먼모음T;
+	}
+
+	#stage{
+		width:1800px;;
+		height:1000px;
+		border:1px solid black;
+		background:url("./Resource/indeximg.jpg");
+		background-size:100% 100%;
+		position:relative;
+		margin:auto;
+	}
+
+	button{
+		width:350px;
+		height:100px;
+		border:1px solid black;
+		border-radius:15px;
+		position:absolute;
+		left:40%;
+		top:60%;
+		font-size:40px;
+		font-weight:bold;
+		
+	}
+</style>
+<script>
+	var main_title;
+
+	function createTitle(){
+		main_title.style.width=700+"px";
+		main_title.style.height=200+"px";
+		main_title.style.background="none";
+		main_title.style.position="absolute";
+		main_title.style.left=550+"px";
+		main_title.style.top=380+"px";
+		main_title.style.fontSize=120+"px";
+		main_title.style.fontWeight="bold";
+		main_title.style.textAlign="center";
+		main_title.style.color="black";
+		main_title.innerText="스피드 퀴즈";
+	}
+
+	function init(){
+		main_title = document.getElementById("title");
+
+		createTitle();
+	}
+
+	addEventListener("load", function(){
+		init();
+	});
+
+</script>
+</head>
+<body>
+	<div id="stage">
+		<div id="title"></div>
+		<form action="02.퀴즈창.html">
+			<button>시작하기</button>
+		</form>
+	</div>
+</body>
+</html>

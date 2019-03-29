@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>조별과제_퀴즈_Application</title>
+<style>
+	*{
+		font-family : 휴먼모음T;
+	}
+	
+	#wrapper{
+		width:1800px;
+		height:1003px;
+		margin:auto;
+		position:relative;
+	}
+
+	.info{
+		width:100%;
+		height:150px;
+		position:absolute;
+		font-size:25px;
+		font-weight:bold;
+		background:white;
+		top:850px;
+	}
+
+	#bt{
+		width:500px;
+		height:100%;
+		float:left;
+		border-top:1px solid black;
+		border-bottom:1px solid black;
+		background:pink;
+	}
+
+	#bt button{
+		width:125px;
+		height:150px;
+		font-size:25px;
+		font-weight:bold;
+		float:left;
+	}
+
+	#sel_area button{
+		width:250px;
+		height:100px;
+		border:1px solid black;
+		border-radius:50px;
+		font-size:50px;
+		position:relative;
+		top:500px;
+	}
+
+	#showTeam{
+		width:80%;
+		height:180px;
+		background:white;
+		position:relative;
+		font-size:80px;
+		font-weight:bold;
+		text-align:center;
+		top:450px;
+		margin:auto;
+		line-height:200px;
+		border:1px solid black;
+		border-radius:10px;
+	}
+</style>
+<script src="./common.js"></script>
+<script src="./questions.js"></script>
+<script>
+	//동작 준비 확인에 관련된 변수
+	var sel_team_flag = false;		// 조를 추첨하였는지 여부를 확인하는 flag
+	var join_teams;						//  참여하는 조의 갯수를 저장하는 변수
+
+	//coverDiv 투명도 효과를 주는데 필요한 변수
+	var stLoop;				// timeover 경고 효과에서 cover div 의 opacity 변경 효과 interval 을 담는 변수
+	var flag=true;			// cover div 의 opacity 변화 함수인 setOp 를 동작하는데 필요한 flag
+	var targetOp=0.0;	// 조기 cover div opacity 값, 초기에 투명해야하므로 0 으로 설정
+	var a=0.1;				// 경고 표현을 위해 opacity 를 변경하는데 쓰이는 가감식 변수
+	var cover;					// 10초 미만 경고 표시를 위해 생성한 cover div 에 대한 getElement 변수
+
+	//timer 구현에 필요한 변수
+	var s;						// timer 에서 초를 표현할 변수
+	var m;						// timer 에서 분을 표현하는 변수
+	var h = 180;				//시간을 변경을 원할 경우 왼쪽 변수의 값을 조정하세요. 
+
+	//기본 템플릿 구성에 필요한 변수
+	var wrapper;											// stage, sel_area 를 감사는 틀인 wrapper 에 대한 getElement 변수
+	var stage;												// Application 왼쪽 문제 출제부 영역 getElement 변수
+	var sel_area;										// Application 화면 오른쪽 조 추첨 영역 getElement 변수
+	var questionBox;									// questionBox 의 getElement 변수
+	var scoreBox;										// scoreBox 의 getElement 변수
+	var scoreChart;										// scoreChart 의 createElement 변수
+	var timerBox;										// timerBox 의 getElement 변수	
+	var bt_start_flag = false;						// 시작 버튼을 눌렀는지 여부 확인 변수
+	var bt_start;											// 시작 버튼 getElement 변수
+	var bt_next;											//다음(정답) 버튼 getElement 변수
+	var bt_reload;										
+	var team;												//팀 추첨에 사용되는 변수
+	var teamArr = new Array();					//추첨된 team 을 저장해놓을 배열, 팀별 점수 출력에 사용
+
+	//문제 출제에 관한 변수
+	var scoreArr=new Array();					// 조 별 획득 점수를 저장하기 위한 배열
+	var score = 0;										// 점수가 누적되어 저장될 변수
+	//var questions = ["하이", "헬로우", "안녕하세요","니하오","고니찌와","울릉도","독도","강아지","호랑이","고양이","캥거루","코알라","dsf","fds","DSfds","Fdsfds","fdsfds","Fdsfsd","fsdfds","fsdfds","sdfdsfds","Fdsfsd"];
+	var r=getRandom(questions.length);	//문제 Random 출제를 위한 난수선언
+
+
+	//타임 오버시 나타날 이미지관련 변수
+	var img;						// 해골 이미지 createElement 변수
+	var x=0							// 해골 이미지 left 값 변수
+	var y=0;						// 해골 이미지 top 값 변수
+	var velX=5;					// 해골 이미지 x축 이동 속도 변수
+	var velY=5;					// 해골 이미지 y축 이동 속도 변수
+	var st_skull;					// 해골 이미지의 움직임 interval 저장 변수
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ###### 화면 구성에 대한 함수
+
+	//기본 stage 구성에 관한 함수
+	function createStage(){
+		stage.style.width=1500+"px";
+		stage.style.height=100+"%";
+		stage.style.border=1+"px solid black";
+		stage.style.background="url('./Resource/mainbg.jpg')";
+		stage.style.backgroundSize=100+"%"+100+"%";
+		stage.style.position="absolute";
+	}
+
+	
+	//문제 박스 구성에 관한 함수
+	function createQuestionBox(){
+		questionBox.style.width=900+"px";
+		questionBox.style.height=450+"px";
+		questionBox.style.position="absolute";
+		questionBox.style.border=1+"px solid black";
+		questionBox.style.borderRadius=20+"px";
+		questionBox.style.borderWidth=20+"px";
+		questionBox.style.borderColor="gray";
+		questionBox.style.left=20+"%";
+		questionBox.style.top=25+"%";
+		questionBox.style.fontSize=150+"px";
+		questionBox.style.fontWeight="bold";
+		questionBox.style.background="#F5F4F1";
+		questionBox.style.textAlign="center";
+		questionBox.style.lineHeight=450+"px";
+		questionBox.style.float="left";
+		questionBox.innerText="Question";
+
+    }
+
+
+	//score box 생성에 관한 함수
+	function score_inject(){
+		scoreBox.style.width=500+"px";
+		scoreBox.style.height=100+"%";
+		scoreBox.style.backgroundImage="url('./Resource/paper.png')";
+		scoreBox.style.backgroundSize=100+"%"+120+"%";
+		scoreBox.style.borderTop=1+"px solid black";
+		scoreBox.style.borderBottom=1+"px solid black";
+		scoreBox.innerText="Score";
+		scoreBox.style.textAlign="center";
+		scoreBox.style.fontSize=85+"px";
+		scoreBox.style.fontWeight="bold";		
+		scoreBox.style.lineHeight=150+"px";
+		scoreBox.style.float="left";
+	}
+
+
+	// scoreChart 를 보이기 위한 함수
+	// scoreChart 는 scoreBox 에 마우스를 올려야 보입니다.
+	function showScore(){
+		var str="";
+		scoreChart = document.createElement("div");
+		scoreChart.style.width=600+"px";
+		scoreChart.style.height=600+"px";
+		scoreChart.style.border=1+"px solid black";
+		scoreChart.style.background="white";
+		scoreChart.style.position="absolute";
+		scoreChart.style.left=500+"px";
+		scoreChart.style.top=150+"px";
+		scoreChart.style.fontSize=60+"px";
+		scoreChart.style.textAlign="center";
+		str=str+"<table border='1px solid black' width='100%' height='100%'>";
+		str=str+"<tr style='background:dodgerblue; color:white'>";
+		str=str+="<td colspan='2'><b>조별 Score</b></td>";
+		str=str+="</tr>";
+		for(var i=0; i<scoreArr.length; i++){
+			str=str+="<tr>";
+			str=str+="<td>"+teamArr[i]+"조</td>";
+			str=str+="<td>"+scoreArr[i]+"점</td>";		
+			str=str+="</tr>";
+		}
+		str=str+="</table>";
+		scoreChart.innerHTML=str;
+		
+
+		stage.appendChild(scoreChart);
+	}
+
+	// scoreBox 위에서 마우스를 치우면 scoreChart 가 화면에서 사라집니다.
+	function closeScore(){
+		stage.removeChild(scoreChart);
+	}
+	
+
+	// 10초 이하 붉은색 반짝임 관련 Cover div 생성 함수
+	function createCover(){
+		cover.style.width=1500+"px";
+		cover.style.height=850+"px";
+		//cover.style.border=1+"px solid black";
+		cover.style.backgroundSize=100+"% "+100+"%";
+		cover.style.position="absolute";
+		cover.style.opacity=0.0;
+		cover.style.background="red";
+
+		wrapper.appendChild(cover);
+	}
+
+
+
+	// Timer 가 들어갈 div 생성 및 showtime 함수 호출하는 함수
+	function createTimerBox(){
+		timerBox.style.width=500+"px";
+		timerBox.style.height=100+"%";
+		timerBox.style.backgroundImage="url('./Resource/paper2.png')";
+		timerBox.style.backgroundSize=100+"%"+120+"%";
+		timerBox.style.borderTop=1+"px solid black";
+		timerBox.style.borderBottom=1+"px solid black";
+		timerBox.style.textAlign="center";
+		timerBox.style.fontSize=85+"px";
+		timerBox.style.fontWegiht="bold";
+		timerBox.style.color="white";
+		timerBox.style.lineHeight=160+"px";
+		timerBox.style.float="left";
+	}
+
+	// timer의 시각적 표현 함수
+	function showTimeText(){
+		m = parseInt(h/60);
+		s = h-(m*60);
+		timerBox.innerText=getTimeString(m)+":"+getTimeString(s);
+	}
+
+
+
+	function createSelectBox(){
+		sel_area.style.width=300+"px";
+		sel_area.style.height=100+"%";
+		sel_area.style.backgroundImage="url('./Resource/bg1.jpg')";
+		sel_area.style.backgroundSize=100+"%"+100+"%";
+		sel_area.style.position="absolute";
+		//sel_group.style.float="left";
+		sel_area.style.left=1502+"px";
+		sel_area.style.border=1+"px solid black";
+		sel_area.style.textAlign="center";
+
+		var rullet = document.createElement("img");
+		rullet.src="./Resource/RandomSelect.png";
+		rullet.style.width=300+"px";
+		rullet.style.position="relative";
+		rullet.style.top=-100+"px";
+		
+		sel_area.appendChild(rullet);
+
+	}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//#####버튼 동작에 대한 함수들
+
+	function execution(){						// start button 클릭시 호출되는 함수
+		if(sel_team_flag){							// 만약 조 추첨을 진행하여 flag 값이 true 라면
+			bt_start_flag =!bt_start_flag;	// start button flag 를 전환시킨다
+			bt_start.blur();							//start button 클릭 후 enter 를 눌렀을때 start button 이 안눌리도록 focus 해제
+
+			if(bt_start_flag){										// start button 을 눌러 flag 상태가 true 로 변경되었다면
+				st = setInterval("showtime()",1000);	// timer 가동 함수를 interval 을 이용하여 호출하고
+				scoreBox.innerText=score+"점";			// scoreBox 에 누적되는 scroe 를 표시한다
+				questionBox.innerText=questions[r];	// questionBox 에는 문제를 표시
+				bt_start.innerText="Pause";					// start button 이 눌렀을 경우에 start button 의 글씨를 pause 로 표현
+				bt_reload.disabled=true;						// startbutton 클릭 후 reload 방지를 위해 disabled 처리
+			}else{														// start button flag 가 false 라면
+				clearInterval(st);									// timer 가동 interval 을 clear 처리함
+				bt_start.innerText="Start";					// pause 로 표현되고 있던 button 을 다시 start 로 표현
+			}
+		}else{															// 조 추첨을 진행하지 않았다면
+			alert("조 추첨을 하지 않았습니다.");						// 조 추첨을 하지 않았다는 안내문구 출력
+		}
+	}
+
+
+	// enter 키 입력시 동작 관련 함수
+	function ok_enter(){
+		var key = event.keyCode;
+		if (key==13){
+			ok_click();
+		}
+	}
+
+
+	// ok 버튼을 클릭시 동작 관련 함수
+	function ok_click(){
+		if(bt_start_flag){
+			if(questions.length<=1){					//주의 : length 와 index 혼동하지 말것, 마지막 요소 1개 즉 length 가 1일때 마지막 동작 수행해야함
+				alert("문제가 끝났습니다.");					// 문제가 모두 소진되었음을 알림
+				score+=10;									// 마지막 문제를 맞췄을 경우 점수를 누적
+				questions.splice(r,1);					// 마지막 요소에서 정답이 클릭될때 10점을 올려주고 마지막 요소 삭제하는 동작
+				questionBox.innerText="End";		// 문제 모두 소진시 문제가 끝났다는 안내문구 출력
+				clearInterval(st);							// 문제를 모두 소진하여 게임이 끝났음으로 timer 정지
+				bt_start_flag=false;						// 시작버튼 누름 확인 flag 초기화
+				bt_start.innerText="Start";			// 시작버튼을 게임시작전 상태로 돌림
+				bt_start.disabled=true;					// reload 누르기 전에 시작버튼 누름을 방지하기 위해 disabled 효과를 적용
+				scoreBox.innerText= score+"점";	// 현재 게임을 진행하여 얻은 점수를 표시
+				scoreArr.push(score);					// 현재 게임을 진행하여 얻은 점수를 배열에 저장, 추후 조별 획득 score 표시 chart 에서 사용
+				teamArr.push(team);					// 현재 게임을 진행한 조를 배열에 저장, 추후 조별 획득 score 표시 chart 에서 사용
+				bt_reload.disabled=false;
+				if(join_teams == teamArr.length){
+					showScore();
+				}else{
+					
+				}	
+			}else{												// 문제 저장배열에 문제가 남아있을경우
+				questions.splice(r,1);					// 문제의 중복출제를 막기 위한 수단, 출제문제의 삭제
+				score+=10;									// 정답 버튼이 눌렸을 경우 획득한 score 를 누적
+				scoreBox.innerText= score+"점";	// 정답 버튼 눌렀을때마다 획득한 score 를 표시 
+				pass();											// 다음 문제를 무작위로 추출하는 함수 호출
+			}
+		}
+	}
+
+
+	// pass 버튼 클릭시 동작 관련 함수
+	function pass(){
+		var str="";										// 배열에 저장된 문제를 표시하기 위한 준비
+		if(bt_start_flag){								// 시작버튼이 눌렸다면 {} 안의 내용을 수행
+			r=getRandom(questions.length);	// 문제의 갯수 중에 무작위로 한문제를 추출
+			str = questions[r];						// 문제를 표시하기 위해 준비된 변수에 저장
+			questionBox.innerText=str;			// 추출한 문제를 questionBox 에 표시
+		}
+	}
+	
+
+	//조 선택 button 클릭시 동작 관련 함수
+	function sel_team(){
+		if(join_teams != null){																		// 참가하는 팀의 갯수가 입력된상태라면	
+			if(join_teams != teamArr.length){													// 입력한 참가팀수와 추첨된 팀이 저장된 배열의 길이가 다르다면
+				alert("게임을 진행할 Team 을 추첨합니다.");											// 추첨 행위 안내문구 출력
+				team = getRandom(join_teams)+1;											// 입력받은 팀 갯수중 1개팀 임의 추첨
+				if(teamArr.includes(team)){														// 만약 추첨한 팀이 이미 뽑은 팀이라면
+					while(teamArr.includes(team)){											// 추첨한 팀이 포함되지 않을때까지
+						team = getRandom(join_teams)+1;									// 뽑기를 반복한다!!
+					}
+						showTeam.innerText=team+"조";										// 뽑은 팀을 결과창에 표시
+						sel_team_flag=true;															// 팀을 뽑았다는 사실을 flag 로 저장
+				}else{
+					showTeam.innerText=team+"조";											// 추첨된 조를 조 추첨 결과창에 표시
+					sel_team_flag=true;																// 조 추첨을 진행하였다는 확인 flag 변화
+				}
+			}else{																							// 입력한 참가 팀수와 추첨된 팀을 저장한 배열의 길이가 같다면
+				alert("모든팀이 게임을 끝냈습니다.");													// 모든 팀이 게임을 진행했다는 안내문구 출력
+				showScore();																			// 조별 score 결과창 표시
+
+				}
+		}else{																							// 참가하는 팀의 갯수를 입력받지 않았다면
+			join_teams = prompt("게임에 참여하는 team 의 갯수를 입력해주세요");		// 참여하는 팀의 갯수를 입력받음
+			alert("게임을 진행할 Team 을 추첨합니다.");											// 추첨 행위 안내문구 출력
+			team = getRandom(join_teams)+1;											// 입력받은 팀 갯수중 1개팀 임의 추첨
+			showTeam.innerText=team+"조";												// 추첨한 조를 추첨결과창에 표시
+			sel_team_flag=true;																	// 팀을 추첨했단 사실를 flag 로 저장
+		}
+	}
+
+
+	//리로드에 관한 함수
+	function reload(){
+		if(h==0){														// TimeOver 시에 동작할 reload 행위
+			stage.removeChild(img);							// 해골 이미지 삭제
+			questionBox.style.background="white";	// questionBox 배경 흰색으로 원복
+			clearTimeout(st_skull);								// 해골 이미지 움직임 interval 제거
+			questionBox.style.color="black";				// questionBox 내부 글색 검은색으로 원복
+			sel_team_flag=false;								// 팀 추첨 여부 확인 변수 초기화, 재추첨을 위해 초기화
+			showTeam.innerHTML=" ";						// 팀 추첨 결과창 초기화
+			cover.style.opacity=0;								// 붉은색 경고 효과 화면에서 제거
+		}
+		
+
+		h=180;												// 타이머 다시 초기화
+		showTimeText();								// 초기화된 타이머 화면으로 표시 
+		bt_start.disabled=false;					// 시작 버튼 disabled 효과 풀기
+		clearTimeout(stLoop);						// 붉은색 경고 효과 interval 제거
+		score=0;											// 이전 게임 score 초기화
+		scoreBox.innerText= "Score";			// 초기화된 score 화면으로 표시
+		questionBox.innerHTML="Question";// questionBox 내용 초기화
+		loop();												// loop 를 죽였으므로 다시 호출하여 시간이 10초 미만일때 경고효과 적용.
+		cover.style.opacity=0;						// loop 살림과 동시에 setOp 함수가 적용되므로 0으로 초기화하여 화면에 붉은색 없앰
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//######## Timer 기능과 관련된 함수들
+	
+    //시간을 보여주고 , 시간이 모두 소진 되면 타이머를 종료시키는 함수
+    function showtime(){
+		h--;
+		showTimeText();
+		if (m==0 && s==0){									// 시간이 모두 소진되었을 경우 효과
+			clearInterval(st);									// 시간이 모두 소진되었으므로 타이머 interval 제거
+			clearTimeout(stLoop);							// 시간이 모두 소진되었으므로 붉은색 경고 효과 interval 제거
+			cover.style.opacity=0.0;						// 시간 모두 소진 후 화면 붉은색 흰색으로 돌림
+			questionBox.style.background="red";	// timeover 알림 효과를 위해 questionBox 배경색 변경
+			questionBox.innerText="TimeOver";		// timeover 텍스트 표시
+			questionBox.style.color="white";			// timeover 텍스트 색상 설정
+			bt_start_flag=false;								// 시작버튼 누름 확인 flag 초기화
+			bt_start.innerText="Start";					// 이후 pause 로 표시되던 시작버튼을 처음상태로 돌림
+			bt_start.disabled="true";						// reload 전 시작버튼 누름 방지를 위해 disabled 처리
+			bt_reload.disabled=false;						// timeover 후 reload 동작을 위해 disabled 처리 해제
+			createSkull();										// timeover 해골 이미지 효과를 위해 해골 이미지 생성
+			skullMove();											// 해골 이미지 이동 효과 적용
+			scoreArr.push(score);							// 조 스피드퀴즈 획득 점수 결과를 배열에 저장, 추후 조별 획득 score 표시 chart 에서 사용
+			teamArr.push(team);							// 게임을 진행한 조를 배열에 저장, 추후 조별 획득 score 표시 chart 에서 사용
+			if(join_teams == teamArr.length){
+					showScore();
+				}
+		}
+    }
+
+	// 타이머가 10초 미만일때 붉은 깜빡힘 효과 관련 cover div opacity control 함수
+	function setOp(){
+		if(flag){
+			targetOp=0.4;
+			if(cover.style.opacity > 0.3){
+				flag=!flag;
+			}
+		}else{
+			targetOp=0.0;
+			if(cover.style.opacity < 0.1){
+				flag=!flag;
+			}
+		}
+	}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ //######TimeOver 후 해골 효과 관련 Method
+
+ function createSkull(){
+		img=document.createElement("img");		
+		img.src="./Resource/skull.png";
+		img.style.width=600+"px";
+		img.style.height=400+"px";
+		//x= getRandom(10)+1;
+		//y= getRandom(10)+1;
+		img.style.left=x+"px";
+		img.style.top=y+"px";
+		img.style.position="absolute";
+		stage.appendChild(img);
+  }
+
+  function skullMove(){
+		x+=velX;
+		y+=velY;
+
+		if(x>=950 || x<=0){
+			velX=-velX;
+		}
+		if(y>=500 || y<=0){
+			velY=-velY;
+		}
+		img.style.left=x+"px";
+		img.style.top=y+"px";
+
+		st_skull=setTimeout("skullMove()",10);
+  }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function init(){
+		wrapper = document.getElementById("wrapper");
+		stage = document.getElementById("stage");
+		questionBox = document.getElementById("questionBox");
+		scoreBox = document.getElementById("scoreBox");
+		timerBox = document.getElementById("timerBox");
+		cover = document.getElementById("cover");
+		bt_start = document.getElementById("bt_start");
+		bt_next = document.getElementById("bt_next");
+		sel_area = document.getElementById("sel_area");
+		showTeam = document.getElementById("showTeam");
+		bt_reload = document.getElementById("bt_reload");
+		createStage();
+		createCover();
+		createSelectBox();
+		createQuestionBox();
+		createTimerBox();
+		score_inject();
+		showTimeText();
+		loop();
+	}
+
+
+	function loop(){
+		cover.style.opacity=parseFloat(cover.style.opacity)+a*(targetOp-parseFloat(cover.style.opacity));
+		if(h<10){
+			setOp();
+		}
+		stLoop = setTimeout("loop()",40);
+	}
+
+	addEventListener("load", function(){
+		init();
+	});
+
+
+</script>
+</head>
+<body onKeyDown="ok_enter()">
+	<div id="wrapper">
+		<div id="stage">
+			<div id="questionBox"></div>
+			<div class="info">
+				<div id="scoreBox" onMouseOver="showScore()" onMouseOut="closeScore()"></div>
+				<div id="timerBox"></div>
+				<div id="bt">
+					<button onClick="execution()" id="bt_start">Start</button>
+					<button onClick="ok_click()" id="bt_next">다음<br>(정답)</button>
+					<button onClick="pass()">PASS</button>
+					<button onClick="reload()" ondblclick="location.reload();" id="bt_reload">Reload</button>
+				</div>
+			</div>
+		</div>
+		<div id="cover"></div>
+		<div id="sel_area">
+			<div id="showTeam"></div>
+			<button onClick="sel_team()">조 뽑기</button>
+		</div>
+	</div>
+</body>
+</html>
