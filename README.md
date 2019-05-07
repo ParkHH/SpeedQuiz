@@ -101,7 +101,7 @@
   </tr>
   <tr>
     <td>
-      <img src="https://blogfiles.pstatic.net/MjAxOTA1MDdfMiAg/MDAxNTU3MjE1NTU1MDQ3.UQAjrJHZPWjMr2KNYdX-t5jL3FUTUqQWPMiiMb0Bda4g.TRJ12_K-KlMZf_lcoKByKzY1jUeH-uR6TQC2OpjXrIgg.PNG.phh_92/%EC%A1%B0%EB%B3%84_Score_%EB%B9%84%EA%B5%90_%ED%99%94%EB%A9%B4.png?type=w2" width="250px"/>
+      <img src="https://blogfiles.pstatic.net/MjAxOTA1MDdfMiAg/MDAxNTU3MjE1NTU1MDQ3.UQAjrJHZPWjMr2KNYdX-t5jL3FUTUqQWPMiiMb0Bda4g.TRJ12_K-KlMZf_lcoKByKzY1jUeH-uR6TQC2OpjXrIgg.PNG.phh_92/%EC%A1%B0%EB%B3%84_Score_%EB%B9%84%EA%B5%90_%ED%99%94%EB%A9%B4.png?type=w2" width="350px"/>
     </td>
     <td>
       <ul>
