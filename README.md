@@ -45,6 +45,14 @@
             <img src="https://blogfiles.pstatic.net/MjAxOTA1MDdfMjM1/MDAxNTU3MjE1NTU1Mjg3.XzTxFpJi_WuAfPhyCqLZzPJcVoJ0oKLT5wDqBej0a6wg.ZFhzKCSHSVYPi-XMuZwh41NFb_AiRZPRmJs6azFaoTIg.PNG.phh_92/%EC%A1%B0%EC%B6%94%EC%B2%A8_2.png?type=w2" width="250px"/>
           </td>
         </tr>
+        <tr>
+          <td>
+            <img src="https://blogfiles.pstatic.net/MjAxOTA1MDdfMTA4/MDAxNTU3MjE1NTI4MjM4.c0Yl-uRNh1YGY6kx2SxGbRCMk1BpYe4nJof4e-uqawwg.waoN3VmXdd5fl5VrhnuOP7yfh3zeFMCNw8La9kjgA2kg.PNG.phh_92/Score.png?type=w2" width="250px"/>
+          </td>
+          <td>
+            ▶ 게임 
+          </td>
+        </tr>
       </table>
     </td>
   </tr>
