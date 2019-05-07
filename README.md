@@ -59,6 +59,7 @@
             <li>정답 처리된 문제는 다시 재출제되지 않는다.</li>
             <li>Pass Button 을 누를시 Score 는 증가하지 않으며 문제가 넘어간다</li>
           </ol>
+          <br>
           <table>
             <tr>
               <td>
@@ -93,6 +94,8 @@
               </td>
             </tr>
           </table>
+          <br>
+          <li>팀별 점수 확인</li>
         </ul>
       </td>
     </tr>
