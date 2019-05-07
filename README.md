@@ -11,7 +11,7 @@
   </tr>
   <tr>
     <td>
-      <img src="https://blogfiles.pstatic.net/MjAxOTA1MDdfMjAw/MDAxNTU3MjE1NTI2NzM1.zV0TLlQn3iWqm1tC5Ne5MWWzcLiIZXOJiel2jzTNI4Ig.TuAdKGUp-ax1EWp-_8KBomLGPPjzlv90K_H1SF3TyoAg.PNG.phh_92/main_%ED%99%94%EB%A9%B4.png?type=w2" width="250px"/>
+      <img src="https://blogfiles.pstatic.net/MjAxOTA1MDdfMjAw/MDAxNTU3MjE1NTI2NzM1.zV0TLlQn3iWqm1tC5Ne5MWWzcLiIZXOJiel2jzTNI4Ig.TuAdKGUp-ax1EWp-_8KBomLGPPjzlv90K_H1SF3TyoAg.PNG.phh_92/main_%ED%99%94%EB%A9%B4.png?type=w2" width="350px"/>
     </td>
     <td>
       <ul>
