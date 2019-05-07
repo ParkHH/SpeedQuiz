@@ -35,8 +35,8 @@
           <li>게임을 진행할때 조 추첨을 하지 않으면 게임이 진행 될 수 없음</li>
         </ol>
       </ul>
-      <table>
-        <tr>조 추첨 진행 화면</tr>
+      <table style="border:1px solid black">
+        <tr>▶ 조 추첨 진행 화면</tr>
         <tr>
           <td>
             <img src="https://blogfiles.pstatic.net/MjAxOTA1MDdfNTYg/MDAxNTU3MjE1NTU0MjQ2.FDE-h8vYDDki3UQKubHzIl3C0LDGZMqRcObQqjpO92og.8tG-xNzbjP9yweG6mZPf3htTje0lJ0a3q55CYlCCgB4g.PNG.phh_92/%EC%A1%B0_%EC%B6%94%EC%B2%A8.png?type=w2" width="250px"/>
