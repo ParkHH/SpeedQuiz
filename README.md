@@ -59,6 +59,40 @@
             <li>정답 처리된 문제는 다시 재출제되지 않는다.</li>
             <li>Pass Button 을 누를시 Score 는 증가하지 않으며 문제가 넘어간다</li>
           </ol>
+          <table>
+            <tr>
+              <td>
+              ▶ 시간 초과 경고화면
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <img src="https://blogfiles.pstatic.net/MjAxOTA1MDdfMTg5/MDAxNTU3MjE1NTMwNDk2.CJRqh90cjNtNjd97TCPXrPWPOSOeJeWAxxMcV2DAbR4g.d15sivBul78yjLGhm9PeR1Mjx07OPx-M9DCp6Hs914og.PNG.phh_92/%EC%8B%9C%EA%B0%84%EC%B4%88%EA%B3%BC_%EA%B2%BD%EA%B3%A0_%ED%9A%A8%EA%B3%BC.png?type=w2" width="250px"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <ol>
+                  <li>시간이 10초 이하로 남게 된다면 위 이미지와 같이 화면이 붉은색으로 깜빡이게된다.</li>
+                </ol>
+              </td>
+            </tr>
+            <tr>
+              <td>▶ 시간 초과 화면</td>
+            </tr>
+            <tr>
+              <td>
+                <img src="https://blogfiles.pstatic.net/MjAxOTA1MDdfMjQ0/MDAxNTU3MjE1NTI5MDEw.wDrTxAUE-8uLWBQM3XOFF64Aj-9MwDbwmoDL5AgLSzYg.7vNTZ25_hqWPrHxnQllNnAzjW71WZIVv_pKqq6o55yIg.PNG.phh_92/Timeover_%ED%99%94%EB%A9%B4.png?type=w2" width="250px"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <ol>
+                  <li>시간이 초과되면 위 이미지와 같이 해골 이미지가 화면을 돌아다니는 효과가 나타난다.</li>
+                </ol>
+              </td>
+            </tr>
+          </table>
         </ul>
       </td>
     </tr>
