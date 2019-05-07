@@ -48,10 +48,18 @@
       </table>
      <tr>
       <td>
-        <img src="https://blogfiles.pstatic.net/MjAxOTA1MDdfMTA4/MDAxNTU3MjE1NTI4MjM4.c0Yl-uRNh1YGY6kx2SxGbRCMk1BpYe4nJof4e-uqawwg.waoN3VmXdd5fl5VrhnuOP7yfh3zeFMCNw8La9kjgA2kg.PNG.phh_92/Score.png?type=w2" width="250px"/>
+        <img src="https://blogfiles.pstatic.net/MjAxOTA1MDdfMTA4/MDAxNTU3MjE1NTI4MjM4.c0Yl-uRNh1YGY6kx2SxGbRCMk1BpYe4nJof4e-uqawwg.waoN3VmXdd5fl5VrhnuOP7yfh3zeFMCNw8La9kjgA2kg.PNG.phh_92/Score.png?type=w2" width="350px"/>
       </td>
       <td>
-        ▶ 게임 
+        <ul>
+          <li>게임 진행 화면</li>
+          <ol>
+            <li>게임이 시작되면 타이머가 가동된다, 타이머의 시간은 Code 내에서 수정이 가능하다</li>
+            <li>문제를 맞힐시 다음(정답) Button 을 누른다. Score 는 10점씩 증가한다.</li>
+            <li>정답 처리된 문제는 다시 재출제되지 않는다.</li>
+            <li>Pass Button 을 누를시 Score 는 증가하지 않으며 문제가 넘어간다</li>
+          </ol>
+        </ul>
       </td>
     </tr>
     </td>
