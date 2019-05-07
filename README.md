@@ -93,12 +93,23 @@
                 </ol>
               </td>
             </tr>
-          </table>
-          <br>
-          <li>팀별 점수 확인</li>
+          </table>         
         </ul>
       </td>
     </tr>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://blogfiles.pstatic.net/MjAxOTA1MDdfMiAg/MDAxNTU3MjE1NTU1MDQ3.UQAjrJHZPWjMr2KNYdX-t5jL3FUTUqQWPMiiMb0Bda4g.TRJ12_K-KlMZf_lcoKByKzY1jUeH-uR6TQC2OpjXrIgg.PNG.phh_92/%EC%A1%B0%EB%B3%84_Score_%EB%B9%84%EA%B5%90_%ED%99%94%EB%A9%B4.png?type=w2" width="250px"/>
+    </td>
+    <td>
+      <ul>
+        <li>조별 점수 확인 화면</li>
+        <ol>
+          <li>Quiz Game 이 끝나고 Score 에 마우스를 올려놓으면 각 팀별로 점수를 확인 할 수 있는 div 가 나타난다.</li>
+        </ol>
+      </ul>
     </td>
   </tr>
 </table>
