@@ -1,4 +1,4 @@
-<h1>Calculator Project</h1>
+<h1>SpeedQuiz Project</h1>
 <ul>
   <li>개발기간 : 2018-12-14 ~ 2018-12-21 (8일)</li>
   <li>인원 : 5명</li>
