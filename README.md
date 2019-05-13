@@ -1,5 +1,6 @@
 <h1>SpeedQuiz Project</h1>
 <ul>
+  <li>프로젝트 개요 : Browser 환경 JavaScript 기반의 SpeedQuiz PGM 제작</li>
   <li>개발기간 : 2018-12-14 ~ 2018-12-21 (8일)</li>
   <li>인원 : 5명</li>
   <li>개발환경 : JavaSript, HTML5, CSS, EditPlus</li>
