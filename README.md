@@ -2,12 +2,12 @@
 <ul>
   <li>개발기간 : 2018-12-14 ~ 2018-12-21 (8일)</li>
   <li>인원 : 5명</li>
-  <li>개발환경 : JavaSript, EditPlus</li>
+  <li>개발환경 : JavaSript, HTML5, CSS, EditPlus</li>
 </ul>
 <table>
   <tr>
-    <td>UI</td>
-    <td>상세 설명</td>
+    <td align="center"><b>UI</b></td>
+    <td align="center"><b>상세 설명</b></td>
   </tr>
   <tr>
     <td>
